@@ -29,9 +29,14 @@ gcloud compute instances create nested-vm --zone us-central1-b \
  
  # Install Docker
  After getting the VM install Docker with the script
+ Dockerinstall.sh
  
- wget 
  
+ # Install RDP 
+ Will be using Banzana's RDP install script
+ 
+ After installing, change the default rdp port 3389 to 3391 by going into /etc/xrdp/xrdp.ini
+ and changinge the "tcp port listening to"
  
               
  
