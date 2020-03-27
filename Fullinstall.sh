@@ -95,20 +95,24 @@ sed -i 's/3389/3391/1' /etc/xrdp/xrdp.ini
 
 
 #Load up Docker and the container
+mkdir iso
 apt-get install linux-headers-gcp
 
 #Download iso from bucket
-gsutil cp gs://nestedvm/Xphomesp3.iso /home/baccc2/Downloads/
+gsutil cp gs://nestedvm/Xphomesp3.iso /home/baccc2/iso/
 
 
-cd /home/baccc2/Downloads/
+cd /home/baccc2/iso/
 docker pull ubuntu:latest
 docker ps
 
+docker run --rm -it --privileged=true --device /dev/vboxdrv:/dev/vboxdrv -p 3389:3389 --name winxp32 ubuntu:latest /bin/sh
+exit
 #Copy over iso to container
 CID=$(sudo docker ps > dockerid.txt &&  tail -1 dockerid.txt  |awk '{print $1;}')
 docker cp Xphomesp3.iso $CID:/
 
+docker run --rm -it --privileged=true --device /dev/vboxdrv:/dev/vboxdrv -p 3389:3389 --name winxp32 ubuntu:latest /bin/sh
 
 #####This is all done inside of the container####
 #Update and Upgrade the Ubuntu System and Repositories
