@@ -95,7 +95,8 @@ sed -i 's/3389/3391/1' /etc/xrdp/xrdp.ini
 
 
 #Load up Docker and the container
-mkdir iso
+
+mkdir /home/baccc2/iso
 apt-get install linux-headers-gcp
 
 #Download iso from bucket
