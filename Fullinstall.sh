@@ -39,12 +39,10 @@ sudo apt install docker-ce -y
 #CHECK IF IT IS RUNNING
 echo "Checking to See if the system is running..."
 
-sudo systemctl status docker
+#sudo systemctl status docker
 
 
 echo "You are all set!" 
-
-
 
 echo "Installing XRDP ! " 
 
@@ -53,14 +51,17 @@ useramount=2
 username="baccc"
 password="baccc"
 LOG="/tmp/rdp_build.log"
-
 #Upgrade?
 echo "Upgrading...(skip)"
 #apt-get -y dist-upgrade &>> ${LOG}
 
 #installs
 echo "Installs(1/2)..."
-apt-get install -y apt-transport-https curl xfce4 xrdp openvpn firefox \
+apt install -y apt-transport-https curl
+apt install -y xfce4
+apt install -y xrdp 
+apt install -y openvpn 
+apt install -y firefox
 build-essential gdb python3 python3-pip docker.io zip \
 unzip openjdk-11-jre icoutils &>> ${LOG}
 
