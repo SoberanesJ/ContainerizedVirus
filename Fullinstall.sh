@@ -1,3 +1,5 @@
+#! /bin/bash
+
 echo "Welcome! I'll install all your services and should have you up and running in no time! " 
 sudo su
 
