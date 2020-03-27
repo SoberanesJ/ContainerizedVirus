@@ -1,7 +1,8 @@
 #! /bin/bash
+#sudo check
+if ! [ $(id -u) = 0 ]; then echo "Please run this script as sudo or root"; exit 1 ; fi
 
 echo "Welcome! I'll install all your services and should have you up and running in no time! " 
-sudo su
 
 echo "Updating Repository"
 apt update
