@@ -15,14 +15,12 @@ Open up Google Cloud Shell and type in the following commands. I will be using a
 gcloud compute disks create disk2 --image-project ubuntu-os-cloud --image-family ubuntu-1804-lts --zone us-central1-b
 
 #Creates a custom image with the above boot disk to add on the liscensing
-gcloud compute images create nested-vm \
-  --source-disk disk2 --source-disk-zone us-central1-b \
-  --licenses "https://compute.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
+
+gcloud compute images create nested-vm --source-disk disk2 --source-disk-zone us-central1-b --licenses "https://compute.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx"
   
 #Creates an instance named nested-vm
-gcloud compute instances create nested-vm --zone us-central1-b \
-              --min-cpu-platform "Intel Haswell" \
-              --image nested-vm
+
+gcloud compute instances create nested-vm --zone us-central1-b --min-cpu-platform "Intel Haswell" --image nested-vm
  
  #note that the Ram will need to be changed to 7.5 Gb in order to handle to VMs
  
