@@ -9,7 +9,8 @@ apt update
 
 echo "Installing an RDP Viwer"
 apt-get install vinagre -y
-
+apt-get install linux-headers-gcp
+apt-get install virtualbox -y
 
 echo "Installing Docker!" 
 echo "--------------------------------------"
@@ -35,14 +36,6 @@ apt-cache policy docker-ce > docker-ce.log
 echo "Installing Docker"
 sudo apt install docker-ce -y
 
-
-#CHECK IF IT IS RUNNING
-echo "Checking to See if the system is running..."
-
-#sudo systemctl status docker
-
-
-echo "You are all set!" 
 
 echo "Installing XRDP ! " 
 
@@ -87,31 +80,33 @@ service xrdp restart
 echo "Done..." 
 
 #Make the primary account sudo to install the container
-useradd -aG sudo baccc2
+usermod -aG sudo baccc2
 
 #Change the default rdp port number Change 3389 to 3391
 
 sed -i 's/3389/3391/1' /etc/xrdp/xrdp.ini
 
-
+#rdp blue screen issue
+cd /etc/xrdp
+sed -i '14 a unset DBUS_SESSION_BUS_ADDRESS' startwm.sh
+sed -i '15 a unset XDG_RUNTIME_DIR' startwm.sh
+sed -i '16 a . $HOME/.profile' startwm.sh
 
 #Load up Docker and the container
-
 mkdir /home/baccc2/iso
-apt-get install linux-headers-gcp
-
+mkdir /home/baccc2/container/
 #Download iso from bucket
-gsutil cp gs://nestedvm/Xphomesp3.iso /home/baccc2/iso/
+gsutil cp gs://malware-container/Xphomesp3.iso /home/baccc2/container/
 
+#Download required files
+gsutil cp -p gs://malware-container/Installwindowsxp.sh /home/baccc2/container/
+gsutil cp -p gs://malware-container/Dockerfile /home/baccc2/container/
 
-cd /home/baccc2/iso/
+cd /home/baccc2/container/
+
 docker pull ubuntu:latest
-docker ps
+docker stop winxp3
+docker rm winxp3
+docker build --tag winxp3 .
 
-docker run --rm -it --privileged=true --device /dev/vboxdrv:/dev/vboxdrv -p 3389:3389 --name winxp32 ubuntu:latest /bin/sh
-exit
-#Copy over iso to container
-CID=$(sudo docker ps > dockerid.txt &&  tail -1 dockerid.txt  |awk '{print $1;}')
-docker cp Xphomesp3.iso $CID:/
-
-docker run --rm -it --privileged=true --device /dev/vboxdrv:/dev/vboxdrv -p 3389:3389 --name winxp32 ubuntu:latest /bin/sh
+docker run --rm -it --privileged=true -p 3389:3389 --name winxp3 winxp3:latest /bin/sh -c "./Installwindowsxp.sh"
