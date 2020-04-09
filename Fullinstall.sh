@@ -99,6 +99,8 @@ mkdir /home/baccc2/container/
 gsutil cp gs://malware-container/Xphomesp3.iso /home/baccc2/container/
 
 #Download required files
+gsutil cp -p gs://malware-container/mod2lab.zip /home/baccc2/container/
+gsutil cp -p gs://malware-container/base64.zip /home/baccc2/container/
 gsutil cp -p gs://malware-container/Installwindowsxp.sh /home/baccc2/container/
 gsutil cp -p gs://malware-container/Dockerfile /home/baccc2/container/
 
