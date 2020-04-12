@@ -93,22 +93,19 @@ sed -i '15 a unset XDG_RUNTIME_DIR' startwm.sh
 sed -i '16 a . $HOME/.profile' startwm.sh
 
 #Load up Docker and the container
-mkdir /home/baccc2/iso
 mkdir /home/baccc2/container/
-#Download iso from bucket
-gsutil cp gs://malware-container/Xphomesp3.iso /home/baccc2/container/
+#Download vm from bucket
+gsutil cp gs://malware-container/winxp_1.ova /home/baccc2/container/
 
 #Download required files
-gsutil cp -p gs://malware-container/mod2lab.zip /home/baccc2/container/
-gsutil cp -p gs://malware-container/base64.zip /home/baccc2/container/
 gsutil cp -p gs://malware-container/Installwindowsxp.sh /home/baccc2/container/
 gsutil cp -p gs://malware-container/Dockerfile /home/baccc2/container/
 
 cd /home/baccc2/container/
 
 docker pull ubuntu:latest
-docker stop winxp3
-docker rm winxp3
-docker build --tag winxp3 .
+docker stop winxp_1
+docker rm winxp_1
+docker build --tag winxp_1 .
 
-docker run --rm -it --privileged=true -p 3389:3389 --name winxp3 winxp3:latest /bin/sh -c "./Installwindowsxp.sh"
+docker run --rm -it --privileged=true -p 3389:3389 --name winxp_1 winxp_1:latest /bin/sh -c "./Installwindowsxp.sh"
