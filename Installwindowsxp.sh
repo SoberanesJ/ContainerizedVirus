@@ -12,7 +12,7 @@ cd /home/baccc2/container/
 VBoxManage import winxp_1.ova
 
 #Set Password
-VBoxManage modifyvm winxp_1 --vrdeproperty VNCPassword=secret
+VBoxManage modifyvm winxp_1 --vrdeproperty VNCPassword=(Replace)
 
 #Start Windows XP
 VBoxHeadless -v on -startvm winxp_1
